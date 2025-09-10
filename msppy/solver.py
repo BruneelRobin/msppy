@@ -64,7 +64,6 @@ class SDDP(object):
 
     def _forward(
             self,
-            job_id=None,
             random_state=None,
             sample_path_idx=None,
             markovian_idx=None,
@@ -72,7 +71,8 @@ class SDDP(object):
             solve_true=False,
             query=None,
             query_dual=None,
-            query_stage_cost=None):
+            query_stage_cost=None, job_id=None
+):
         """Single forward step. """
         MSP = self.MSP
         forward_solution = [None for _ in range(self.forward_T)]
