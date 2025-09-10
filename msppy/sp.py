@@ -1085,7 +1085,7 @@ class StochasticModel(object):
                 else:
                     var_tuple.setAttr("Obj", value[k])
 
-    def _sample_uncertainty(self, random_state=None):
+        def _sample_uncertainty(self, random_state=None, job_id=None, t=None):
         # Sample stage-wise independent true continuous uncertainty
         random_state = check_random_state(random_state)
         if self.uncertainty_coef_continuous is not None:
@@ -1093,22 +1093,22 @@ class StochasticModel(object):
                 (constr, var),
                 dist,
             ) in self.uncertainty_coef_continuous.items():
-                self._model.chgCoeff(constr, var, dist(random_state))
+                self._model.chgCoeff(constr, var, dist(random_state, job_id, t))
         if self.uncertainty_rhs_continuous is not None:
             for constr_tuple, dist in self.uncertainty_rhs_continuous.items():
                 if type(constr_tuple) == tuple:
-                    self._model.setAttr("RHS", list(constr_tuple), dist(random_state))
+                    self._model.setAttr("RHS", list(constr_tuple), dist(random_state, job_id, t))
                 else:
-                    constr_tuple.setAttr("RHS", dist(random_state))
+                    constr_tuple.setAttr("RHS", dist(random_state, job_id, t))
         if self.uncertainty_obj_continuous is not None:
             for var_tuple, dist in self.uncertainty_obj_continuous.items():
                 if type(var_tuple) == tuple:
-                    self._model.setAttr("Obj", list(var_tuple), dist(random_state))
+                    self._model.setAttr("Obj", list(var_tuple), dist(random_state, job_id, t))
                 else:
-                    var_tuple.setAttr("Obj", dist(random_state))
+                    var_tuple.setAttr("Obj", dist(random_state, job_id, t))
         if self.uncertainty_mix_continuous is not None:
             for keys, dist in self.uncertainty_mix_continuous.items():
-                sample = dist(random_state)
+                sample = dist(random_state, job_id, t)
                 for index, key in enumerate(keys):
                     if type(key) == gurobipy.Var:
                         key.setAttr("Obj", sample[index])
