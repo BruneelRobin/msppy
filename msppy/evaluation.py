@@ -158,16 +158,20 @@ class _Evaluation(object):
         n_processes = min(self.n_sample_paths, n_processes)
         jobs = allocate_jobs(self.n_sample_paths, n_processes)
         pv = multiprocessing.Array("d", [0] * self.n_sample_paths)
-        procs = [None] * n_processes
-        for p in range(n_processes):
-            procs[p] = multiprocessing.Process(
-                target=self.run_single,
-                args=(pv,jobs[p],query,query_dual,query_stage_cost,stage_cost,
-                    solution,solution_dual)
-            )
-            procs[p].start()
-        for proc in procs:
-            proc.join()
+
+        if n_processes > 1:
+            procs = [None] * n_processes
+            for p in range(n_processes):
+                procs[p] = multiprocessing.Process(
+                    target=self.run_single,
+                    args=(pv,jobs[p],query,query_dual,query_stage_cost,stage_cost,
+                        solution,solution_dual)
+                )
+                procs[p].start()
+            for proc in procs:
+                proc.join()
+        else:
+            self.run_single(pv,jobs[p],query,query_dual,query_stage_cost,stage_cost, solution,solution_dual)
         if self.n_simulations != 1:
             self.pv = [item for item in pv]
         else:
