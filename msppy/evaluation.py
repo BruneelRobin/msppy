@@ -171,7 +171,7 @@ class _Evaluation(object):
             for proc in procs:
                 proc.join()
         else:
-            self.run_single(pv,jobs[p],query,query_dual,query_stage_cost,stage_cost, solution,solution_dual)
+            self.run_single(pv,jobs[0],query,query_dual,query_stage_cost,stage_cost, solution,solution_dual)
         if self.n_simulations != 1:
             self.pv = [item for item in pv]
         else:
