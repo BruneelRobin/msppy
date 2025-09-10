@@ -225,6 +225,7 @@ class _Evaluation(object):
             markovian_sample = (markovian_samples[idx]
                 if markovian_samples is not None else None)
             result = self.solver._forward(
+                job_id=j,
                 random_state=random_state,
                 sample_path_idx=sample_path_idx,
                 markovian_idx=markovian_idx,
