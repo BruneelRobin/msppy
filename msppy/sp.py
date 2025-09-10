@@ -1085,7 +1085,7 @@ class StochasticModel(object):
                 else:
                     var_tuple.setAttr("Obj", value[k])
 
-        def _sample_uncertainty(self, random_state=None, job_id=None, t=None):
+    def _sample_uncertainty(self, random_state=None, job_id=None, t=None):
         # Sample stage-wise independent true continuous uncertainty
         random_state = check_random_state(random_state)
         if self.uncertainty_coef_continuous is not None:
