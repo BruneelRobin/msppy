@@ -64,6 +64,7 @@ class SDDP(object):
 
     def _forward(
             self,
+            job_id=None,
             random_state=None,
             sample_path_idx=None,
             markovian_idx=None,
@@ -115,7 +116,7 @@ class SDDP(object):
                 # true stagewise independent randomness is infinite and solve
                 # for true
                 elif m._type == 'continuous' and solve_true:
-                    m._sample_uncertainty(random_state)
+                    m._sample_uncertainty(random_state, job_id, t)
                 # true stagewise independent randomness is large and solve
                 # for true
                 elif m._type == 'discrete' and m._flag_discrete == 1 and solve_true:
