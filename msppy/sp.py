@@ -805,7 +805,8 @@ class StochasticModel(object):
         The above constraint contains a stage-wise independent uncertain
         constraint coefficient and a Markovian RHS
         """
-        constr = self._model.addConstr(lhs, sense=sense, rhs=rhs, name=name)
+        #constr = self._model.addConstr(lhs, sense=sense, rhs=rhs, name=name)
+        constr = self._model.addConstr(lhs)
         self._model.update()
 
         if uncertainty is not None:
