@@ -4,7 +4,8 @@ import sys
 
 REQUIRED_GUROBI = (7, 0)
 try:
-    import gurobipy
+    pass
+    #import gurobipy
     #if gurobipy.gurobi.version() < REQUIRED_GUROBI:
     #    sys.stderr.write("""
     #    This version of MSP requires gurobipy 7+. Please check Gurobi website to install it properly and then try again:
